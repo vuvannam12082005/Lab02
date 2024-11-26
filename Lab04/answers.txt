@@ -1,0 +1,47 @@
+10. Unique item in a list
+- Q: When overriding the equals() method of the Object class, you will have to cast the Object parameter obj to the type of Object that you are dealing with. 
+For example, in the Media class, you must cast the Object obj to a Media, and then check the equality of the two objects’ attributes as the above requirements (i.e. title for Media; title and length for Track). 
+If the passing object is not an instance of Media, what happens?
+
+- A: If the passing object (obj) is not an instance of Media, the equals() method will return false because the comparison cannot be performed. 
+The equals() method in the Media class includes a check to ensure that obj belongs to the same class as Media using the getClass() method.
+
+11. Polymorphism with toString() method
+- Q: Iterate through the list and print out the information of the media by using toString() method. 
+Observe what happens and explain in detail.
+
+- A: When we iterate through the list using a for-each loop, the toString() method is called on each Media object. 
+The toString() method is dynamically bound, meaning it is called based on the actual type of the object at runtime. 
+So, for each media object in the list, the appropriate toString() method of the respective class (Book, DVD, or CompactDisc) is invoked, and the information specific to that type is printed.
+This demonstrates the concept of polymorphism, where objects of different types can be treated as objects of a common superclass (Media in this case), allowing for code reuse and flexibility.
+
+12. Sort media in the cart
+- Q: What class should implement the Comparable interface?
+
+- A: The Media class.
+
+- Q: In those classes, how should you implement the compareTo() method be to reflect the ordering that we want?
+
+- A:
+public class Media implements Comparable<Media> {
+    // Other attributes and methods
+    
+    @Override
+    public int compareTo(Media other) {
+        if (this.cost < other.cost) {
+            return -1;
+        } else if (this.cost > other.cost) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+- Q: Can we have two ordering rules of the item (by title then cost and by cost then title) if we use this Comparable interface approach?
+
+- A: No, we can't.
+
+- Q: Suppose the DVDs has a different ordering rule from the other media types, that is by title, then decreasing length, then cost. How would you modify your code to allow this?
+
+- A: Implement another compareTo() method in the DVD class.
